@@ -25,7 +25,7 @@ function html() {   //接收一个回调函数作为参数 此回调函数执行
     //最后 html 进行压缩   
     return gulp.src(['./src/index.html', './src/view/**/*.html', './src/style/rev-manifest.json', './src/js/rev-manifest.json'], { base: './src/' })
         .pipe(revCollector({ replaceReved: true }))   //对这些文件进行打版本   
-        .pipe(htmlmin({   
+        .pipe(htmlmin({
             removeComments: true, // 清除HTML注释   
             collapseWhitespace: true, // 压缩HTML   
             // collapseBooleanAttributes: true, //省略布尔属性的值 <input checked="true"/> ==> <input />   
