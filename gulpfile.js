@@ -38,7 +38,7 @@ function html() {   //接收一个回调函数作为参数 此回调函数执行
         .pipe(gulp.dest('./dist/'))  //目标目录和源目录对应  ./dist/ => ./src/
 }
 
-//可以指定当前任务(函数任务)的名字
+//文件的处理过程:
 //1.sass进行样式的预处理 (sass => css)
 //2.代码进行合并 排除掉已经合并的main.css文件 不然会给main.css重复添加内容
 //3.sourcemap处理
@@ -49,7 +49,7 @@ function html() {   //接收一个回调函数作为参数 此回调函数执行
 //1.sass进行样式的预处理 (sass => css)
 //2.代码进行合并 排除掉已经合并的main.css文件 不然会给main.css重复添加内容
 //#region style for dev
-function style() {
+function style() {  
     return gulp.src(['./src/style/**/*.{scss,css}', '!./src/style/main.css'])
         .pipe(sourcemap.init())    //注意sourcemap的位置 现在出现了两次
         .pipe(sass().on('error', sass.logError))
