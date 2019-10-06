@@ -96,9 +96,10 @@ function cleanDist() {
 //#region gulp拷贝任务 一个文件夹到另一个文件夹
 //实现从src/assets/ 下所有的文件都拷贝到dist/assets
 function copy() {
-    //task 方法 接收一个cb回调函数 在任务结束的时候执行下cb回调函数
-    //方法:可以返回一个流
-    //方法:返回一个promise也是可以  /** 代表任何子目录 /*.*代表任何文件下的任何后缀名文件
+    //src总共有三种使用方法
+    //方法1: 接收一个cb回调函数 在任务结束的时候执行下cb回调函数
+    //方法2:可以返回一个流
+    //方法3:返回一个promise也是可以  /** 代表任何子目录 /*.*代表任何文件下的任何后缀名文件
     return gulp.src(['src/lib/**/*.*', 'src/assets/**/*.*'], { base: 'src/' })  //node 一个src流   base:'src/' 以src为基准目录 然后pipe对应了dist/
         .pipe(gulp.dest('dist/'))   //pipe到另一个文件夹下 gulp.dest:把所有文件保存到xxx地方   
 }
