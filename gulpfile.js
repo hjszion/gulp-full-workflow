@@ -43,7 +43,7 @@ function html() {   //接收一个回调函数作为参数 此回调函数执行
 //文件的处理过程:
 //1.sass进行样式的预处理 (sass => css)
 //2.代码进行合并 排除掉已经合并的main.css文件 不然会给main.css重复添加内容
-//3.sourcemap处理 用于在浏览器查看css代码出现在.scss文件的哪一行
+//3.sourcemap处理 用于在浏览器查看css代码出现在.scss文件 或者 .css 的哪个位置
 //4.给css3的样式打上自动的前缀 autoprefixer
 //5.压缩css
 //6.给main.css文件打上版本号
@@ -53,7 +53,7 @@ function style() {
         .pipe(sass().on('error', sass.logError))
         .pipe(autoprefixer({
             overrideBrowserslist: ['> 0.5%'],   //支持的浏览器的版本 这里可以写成browserlist的写法 大于0.5%市场占有率的浏览器
-            cascade: true  //设定最终生成的css的样式 
+            cascade: true  //设定最终生成的css的样式 因为后面进行压缩处理 这条不设置也行
         }))
         .pipe(concat('main.css'))
         .pipe(sourcemap.write())   //注意sourcemap的位置 现在出现了两次 合并文件完成后执行第二次soucemap.write()操作
@@ -62,6 +62,7 @@ function style() {
 //#endregion
 
 //#region style for production
+//production版本的style不需要soucemap流程
 function stylePro() {
     return gulp.src(['./src/style/**/*.{scss,css}', '!./src/style/main.css'])  //拿到该目下的所有.scss .css
         .pipe(sass().on('error', sass.logError))
