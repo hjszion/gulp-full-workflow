@@ -79,6 +79,8 @@ function stylePro() {
         .pipe(rev.manifest())   //使用版本映射关系生成具体json文件  gulp-rev 
         .pipe(gulp.dest('./src/style/'))   //把映射文件存到指定路径 最后该路径就会多了main-a443c1d8..和rev-manifest.json这两个文件
 }
+//#endregion
+
 //清理指定目录下的所有.css文件和.html文件
 function cleanDist() {
     return gulp.src(['./dist/style/*.css', './dist/index.html', './dist/view/**/*.html'], { read: false})
@@ -86,7 +88,6 @@ function cleanDist() {
 }
 gulp.task("stylePro", gulp.series(cleanDist, stylePro));
 gulp.task("htmldist", gulp.series(clendDist, stylePro, html));
-//#endregion
 
 //#region gulp任务的各种操作
 //注册一个任务 串行的顺序执行 html style:pro 
