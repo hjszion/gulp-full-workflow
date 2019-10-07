@@ -81,18 +81,12 @@ function stylePro() {
 }
 //#endregion
 
-//清理指定目录下的所有.css文件和.html文件
+//#region 清理指定目录下的所有.css文件和.html文件
 function cleanDist() {
     return gulp.src(['./dist/style/*.css', './dist/index.html', './dist/view/**/*.html'], { read: false})
         .pipe(clean());
 }
-gulp.task("stylePro", gulp.series(cleanDist, stylePro));
-gulp.task("htmldist", gulp.series(clendDist, stylePro, html));
-
-//#region gulp任务的各种操作
-//注册一个任务 串行的顺序执行 html style:pro 
-
-//#endregion
+//#endregion 
 
 //#region gulp拷贝任务 一个文件夹到另一个文件夹
 //实现从src/assets/ 下所有的文件都拷贝到dist/assets
@@ -105,6 +99,13 @@ function copy() {
         .pipe(gulp.dest('dist/'))   //pipe到另一个文件夹下 gulp.dest:把所有文件保存到xxx地方   
 }
 //#endregion
+
+//dev 开发相关的任务
+//1.监听sass的变化 自动编译sass
+//2.自动执行打开浏览器 启动server
+gulp.task("dev", function(){
+    gulp.watch(['./src/style/scss/**/*.scss', './src/style/css/**/*.css'], gulp.series(style))
+});
 
 //图片进行压缩处理
 function imgMin() {
