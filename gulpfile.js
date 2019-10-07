@@ -115,7 +115,7 @@ function imgMin() {
 }
 //#endregion
 
-//js 任务方法
+//#region JS任务方法
 //1.保证js开发的格式的规范性 eslint => 进行代码格式规范校验(es6 js jsx),还可以辅助我们进行格式化
 //2.es6的转码成es5 => babel 来实现
 //3.对js代码进行压缩处理
@@ -138,6 +138,7 @@ function js() {
         .pipe(rev.manifest())   //使用版本映射关系生成具体json文件
         .pipe(gulp.dest('./src/js/'));
 }
+//#end region
 
 // 给requirejs引用的文件修改版本号的路径
 function revjs() {
