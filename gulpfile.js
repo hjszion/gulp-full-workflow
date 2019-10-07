@@ -100,14 +100,7 @@ function copy() {
 }
 //#endregion
 
-//dev 开发相关的任务
-//1.监听sass的变化 自动编译sass
-//2.自动执行打开浏览器 启动server
-gulp.task("dev", function(){
-    gulp.watch(['./src/style/scss/**/*.scss', './src/style/css/**/*.css'], gulp.series(style))
-});
-
-//图片进行压缩处理
+//#region 图片进行压缩处理
 function imgMin() {
     return gulp.src(['./src/assets/**/*.{jpeg,png,jpg,gif,ico,svg}'], { base: './src/assets/' })
         .pipe(imagemin({
@@ -120,6 +113,16 @@ function imgMin() {
         }))
         .pipe(gulp.dest('./dist/assets/'));
 }
+//#endregion
+
+//dev 开发相关的任务
+//1.监听sass的变化 自动编译sass
+//2.自动执行打开浏览器 启动server
+//只要.scss或.css产生变化以后 就会自动执行这个保存工作
+gulp.task("dev", function(){
+    gulp.watch(['./src/style/scss/**/*.scss', './src/style/css/**/*.css'], gulp.series(styleDev))
+});
+
 //js 任务方法
 //1.保证js开发的格式的规范性 eslint => 进行代码格式规范校验(es6 js jsx),还可以辅助我们进行格式化
 //2.es6的转码成es5 => babel 来实现
