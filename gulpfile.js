@@ -85,6 +85,7 @@ function cleanDist() {
     return gulp.src(['dist/**/*.*'], { read: false, allowEmpty: true })
         .pipe(clean());
 }
+gulp.task("stylePro", gulp.series(cleanDist, stylePro));
 //#endregion
 
 //#region gulp任务的各种操作
