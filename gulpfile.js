@@ -24,7 +24,7 @@ function html() {   //接收一个回调函数作为参数 此回调函数执行
     //把src目录下的html都复制到dist目录下 并且替换css版本 js版本也得替换   
     //最后 html 进行压缩   
     return gulp.src(['./src/index.html', './src/view/**/*.html', './src/style/rev-manifest.json', './src/js/rev-manifest.json'], { base: './src/' })
-        .pipe(revCollector({ replaceReved: true }))   //对这些文件进行打版本   
+        .pipe(revCollector({ replaceReved: true }))   //执行html文件内的css文件名的替换和js文件名的替换  
         .pipe(htmlmin({
             removeComments: true, // 清除HTML注释   
             collapseWhitespace: true, // 压缩HTML   
@@ -38,7 +38,6 @@ function html() {   //接收一个回调函数作为参数 此回调函数执行
         .pipe(gulp.dest('./dist/'))  //目标目录和源目录对应  ./dist/ => ./src/
 }
 
-
 //#region style for dev
 //文件的处理过程:
 //1.sass进行样式的预处理 (sass => css)
@@ -47,7 +46,7 @@ function html() {   //接收一个回调函数作为参数 此回调函数执行
 //4.给css3的样式打上自动的前缀 autoprefixer
 //5.压缩css
 //6.给main.css文件打上版本号
-function style() {  
+function styleDev() {  
     return gulp.src(['./src/style/**/*.{scss,css}', '!./src/style/main.css'])
         .pipe(sourcemap.init())    //注意sourcemap的位置 现在出现了两次
         .pipe(sass().on('error', sass.logError))
