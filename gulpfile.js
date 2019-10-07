@@ -86,6 +86,7 @@ function cleanDist() {
         .pipe(clean());
 }
 gulp.task("stylePro", gulp.series(cleanDist, stylePro));
+gulp.task("htmlstyle", gulp.series("stylePro", html));
 //#endregion
 
 //#region gulp任务的各种操作
