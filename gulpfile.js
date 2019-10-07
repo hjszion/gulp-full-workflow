@@ -95,7 +95,7 @@ function copy() {
     //方法1: 接收一个cb回调函数 在任务结束的时候执行下cb回调函数
     //方法2:可以返回一个流
     //方法3:返回一个promise也是可以  /** 代表任何子目录 /*.*代表任何文件下的任何后缀名文件
-    return gulp.src(['src/lib/**/*.*', 'src/assets/**/*.*'], { base: 'src/' })  //node 一个src流   base:'src/' 以src为基准目录 然后pipe对应了dist/
+    return gulp.src(['src/lib/**/*.*', 'src/assets/**/*.*'], {base: 'src/'})  //node 一个src流   base:'src/' 以src为基准目录 然后pipe对应了dist/
         .pipe(gulp.dest('dist/'))   //pipe到另一个文件夹下 gulp.dest:把所有文件保存到xxx地方   
 }
 //#endregion
@@ -138,7 +138,7 @@ function js() {
         .pipe(rev.manifest())   //使用版本映射关系生成具体json文件
         .pipe(gulp.dest('./src/js/'));
 }
-//#end region
+//#endregion
 
 // 给requirejs引用的文件修改版本号的路径
 function revjs() {
