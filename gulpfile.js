@@ -75,9 +75,9 @@ function stylePro() {
             compatibility: 'ie8',   //兼容IE8浏览器
             keepSpecialComments: '*'
         }))
-        .pipe(rev())   //给main.css生成版本映射关系
+        .pipe(rev())   //给main.css计算版本映射关系并且生成打了版本的对应文件 gulp-rev
         .pipe(gulp.dest('./dist/style/'))
-        .pipe(rev.manifest())   //使用版本映射关系生成具体json文件
+        .pipe(rev.manifest())   //使用版本映射关系生成具体json文件  gulp-rev 
         .pipe(gulp.dest('./src/style/'))   //把映射文件存到指定路径 最后该路径就会多了main-a443c1d8..和rev-manifest.json这两个文件
 }
 //清理指定目录下的所有.css文件和.html文件
