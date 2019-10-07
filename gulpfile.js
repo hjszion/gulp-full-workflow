@@ -81,10 +81,10 @@ function stylePro() {
 }
 //清理指定目录下的所有.css文件和.html文件
 function cleanDist() {
-    return gulp.src(['dist/**/*.*', './dist/index.html', './dist/view/**/*.html'], { read: false, allowEmpty: true })
+    return gulp.src(['./dist/style/*.css', './dist/index.html', './dist/view/**/*.html'], { read: false})
         .pipe(clean());
 }
-
+gulp.task("stylePro", gulp.series(cleanDist, stylePro));
 gulp.task("htmldist", gulp.series(clendDist, stylePro, html));
 //#endregion
 
