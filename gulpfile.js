@@ -131,7 +131,7 @@ function js() {
             console.log(`JSfailNumber: ${results.errorCount}`);
         }))
         .pipe(eslint.format())
-        .pipe(eslint.failAfterError())
+        .pipe(eslint.failAfterError())  //产生错误就停止...
         .pipe(babel())   //配置内容都放到了 .babelrc文件里面了
         .pipe(uglify())  //压缩代码
         .pipe(rev())  //给js打版本 生成打版本文件
