@@ -179,7 +179,7 @@ template('about_ctn',function($data,$filename
 ) {
 'use strict';var $utils=this,$helpers=$utils.$helpers,$escape=$utils.$escape,about=$data.about,$out='';$out+='<div>\n    ';
 $out+=$escape(about);
-$out+='\n</div>\n';
+$out+='\n    <input type="button" name="" id="btnOpenDialog" value="btnOpenDialog">\n</div>\n';
 return new String($out);
 });/*v:1*/
 template('header',function($data,$filename

@@ -17,10 +17,12 @@ requirejs(['jquery', 'api', 'tpl', 'easyui'], function ($, api, tpl) {
         $('.header').html(tpl('header', { title: 'google.com' }));
         $('.footer').html(tpl('stu/footer', {}));
         $('.ctn').html(tpl('about_ctn', {about:'hello google!'}));
-        $('.dialog-box').dialog({
-            title:"hello!",
-            width:400,
-            height:400
-        });
+        $('#btnOpenDialog').on('click', function(){
+            $('.dialog-box').dialog({
+                title:"hello!",
+                width:400,
+                height:400
+            });      
+        })
     });
 });
