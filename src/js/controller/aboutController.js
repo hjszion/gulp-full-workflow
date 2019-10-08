@@ -26,3 +26,4 @@ requirejs(['jquery', 'api', 'tpl', 'easyui'], function ($, api, tpl) {
         })
     });
 });
+

@@ -222,7 +222,6 @@ function tpl() {
         .pipe(replace('var String = this.String;', 'var String = window.String;'))
         .pipe(gulp.dest('src/js/tmpl/'));
 }
-gulp.task('tpl', tpl);
 //#endregion
 
 //#region dev 开发相关的任务
