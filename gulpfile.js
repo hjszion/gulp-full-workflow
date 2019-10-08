@@ -46,7 +46,7 @@ function html() {   //接收一个回调函数作为参数 此回调函数执行
 //4.给css3的样式打上自动的前缀 autoprefixer
 //5.压缩css
 //6.给main.css文件打上版本号
-function styleDev() {  
+function styleDev() {
     return gulp.src(['./src/style/**/*.{scss,css}', '!./src/style/main.css'])
         .pipe(sourcemap.init())    //注意sourcemap的位置 现在出现了两次
         .pipe(sass().on('error', sass.logError))
@@ -83,7 +83,7 @@ function stylePro() {
 
 //#region 清理指定目录下的所有.css文件和.html文件
 function cleanDist() {
-    return gulp.src(['./dist/style/*.css', './dist/index.html', './dist/view/**/*.html'], { read: false})
+    return gulp.src(['./dist/style/*.css', './dist/index.html', './dist/view/**/*.html'], { read: false })
         .pipe(clean());
 }
 //#endregion 
@@ -95,7 +95,7 @@ function copy() {
     //方法1: 接收一个cb回调函数 在任务结束的时候执行下cb回调函数
     //方法2:可以返回一个流
     //方法3:返回一个promise也是可以  /** 代表任何子目录 /*.*代表任何文件下的任何后缀名文件
-    return gulp.src(['src/lib/**/*.*', 'src/assets/**/*.*'], {base: 'src/'})  //node 一个src流   base:'src/' 以src为基准目录 然后pipe对应了dist/
+    return gulp.src(['src/lib/**/*.*', 'src/assets/**/*.*'], { base: 'src/' })  //node 一个src流   base:'src/' 以src为基准目录 然后pipe对应了dist/
         .pipe(gulp.dest('dist/'))   //pipe到另一个文件夹下 gulp.dest:把所有文件保存到xxx地方   
 }
 //#endregion
@@ -122,7 +122,16 @@ function imgMin() {
 //4.对压缩后的js代码打上版本号
 function js() {
     return gulp.src(['./src/js/**/*.js'])
-        .pipe(eslint())
+        .pipe(eslint({
+            rules: {
+                //设置校验规则
+                "semi": ["error", "always"],
+                "quotes": ["error", "single"]
+            },
+            globals: ['jQuery', '$'],   //全局变量　
+            envs: ['browser']   //所支持的环境 
+        })
+        )
         .pipe(eslint.results(results => {
             // Called once for all ESLint results.
             console.log(`JStotalFilesNumber: ${results.length}`);
@@ -131,7 +140,7 @@ function js() {
         }))
         .pipe(eslint.format())
         .pipe(eslint.failAfterError())
-        .pipe(babel())  //配置内容都放到了 .babelrc文件里面了
+        .pipe(babel())   //配置内容都放到了 .babelrc文件里面了
         .pipe(uglify())  //压缩代码
         .pipe(rev())  //给js打版本 生成打版本文件
         .pipe(gulp.dest('./dist/js/'))
@@ -210,7 +219,7 @@ function distBrowser() {
 //1.监听sass的变化 自动编译sass
 //2.自动执行打开浏览器 启动server
 //只要.scss或.css产生变化以后 就会自动执行这个保存工作
-gulp.task("dev", function(){
+gulp.task("dev", function () {
     gulp.watch(['./src/style/scss/**/*.scss', './src/style/css/**/*.css'], gulp.series(styleDev))
 });
 //#endregion
