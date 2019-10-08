@@ -117,21 +117,13 @@ function imgMin() {
 
 //#region JS任务方法
 //1.保证js开发的格式的规范性 eslint => 进行代码格式规范校验(es6 js jsx),还可以辅助我们进行格式化
+//在js文件夹下新建一个.eslintrc文件把校验规则rules的内容写在这个里面
 //2.es6的转码成es5 => babel 来实现
 //3.对js代码进行压缩处理
 //4.对压缩后的js代码打上版本号
 function js() {
     return gulp.src(['./src/js/**/*.js'])
-        .pipe(eslint({
-            rules: {
-                //设置校验规则
-                "semi": ["error", "always"],
-                "quotes": ["error", "single"]
-            },
-            globals: ['jQuery', '$'],   //全局变量　
-            envs: ['browser']   //所支持的环境 
-        })
-        )
+        .pipe(eslint())
         .pipe(eslint.results(results => {
             // Called once for all ESLint results.
             console.log(`JStotalFilesNumber: ${results.length}`);
