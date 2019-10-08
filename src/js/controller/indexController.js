@@ -18,7 +18,7 @@ requirejs(['jquery', 'api', 'tpl'], function($, api, tpl) {
 
     // 控制器层调用服务器层获取数据
     api.getUserList(null, function(data){
-        // console.log(data);   //配合模版引擎(art-template) + data => html标签
+        //console.log(data);   //配合模版引擎(art-template) + data => html标签
         let html = tpl('userlist', {userlist:data});
         $('.userlist').html(html);
     });

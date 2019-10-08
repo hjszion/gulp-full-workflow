@@ -207,7 +207,7 @@ function openBrowserDist() {
 }
 //#endregion
 
-//#region tpl任务 用于处理html模版
+//#region tpl任务 用于处理template文件夹下的所有html模版
 function tpl() {
     // 拿到所有的路径
     return gulp

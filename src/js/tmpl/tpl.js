@@ -191,19 +191,19 @@ return new String($out);
 });/*v:1*/
 template('userlist',function($data,$filename
 ) {
-'use strict';var $utils=this,$helpers=$utils.$helpers,$each=$utils.$each,index=$data.index,$index=$data.$index,$escape=$utils.$escape,val=$data.val,$out='';$out+='<ul>\n    ';
-$each([],function(index,$index){
+'use strict';var $utils=this,$helpers=$utils.$helpers,$each=$utils.$each,userlist=$data.userlist,val=$data.val,index=$data.index,$escape=$utils.$escape,$out='';$out+='<ul>\n    ';
+$each(userlist,function(val,index){
 $out+='\n    <li>';
 $out+=$escape(index);
-$out+=' -';
+$out+='-';
 $out+=$escape(val.id);
-$out+=' -';
+$out+='-';
 $out+=$escape(val.name);
 $out+='</li>\n    ';
 });
 $out+='\n</ul>';
 return new String($out);
 });/*v:1*/
-template('stu/footer','<div class="footer">\n    <h5>This is the Bottom Template</h5>\n</div>');
+template('stu/footer','<h5>This is the Bottom Template</h5>');
 
 }()
