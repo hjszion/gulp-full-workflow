@@ -175,11 +175,18 @@
     if (typeof define === 'function') {define(function() {return template;});} else if (typeof exports !== 'undefined') {module.exports = template;} else {this.template = template;}
     
     /*v:1*/
+template('about_ctn',function($data,$filename
+) {
+'use strict';var $utils=this,$helpers=$utils.$helpers,$escape=$utils.$escape,about=$data.about,$out='';$out+='<div>\n    ';
+$out+=$escape(about);
+$out+='\n</div>\n';
+return new String($out);
+});/*v:1*/
 template('header',function($data,$filename
 ) {
 'use strict';var $utils=this,$helpers=$utils.$helpers,$escape=$utils.$escape,title=$data.title,$out='';$out+='<div class="header">\n    <h1>This is the Header Tempalte</h1>\n    <h2>';
 $out+=$escape(title);
-$out+='</h2>\n</div>\n';
+$out+='</h2>\n    <a href="../view/about.html">About-Page</a><br>\n</div>\n';
 return new String($out);
 });/*v:1*/
 template('userlist',function($data,$filename
