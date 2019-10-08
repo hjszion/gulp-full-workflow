@@ -16,6 +16,8 @@ const connect = require('gulp-connect');
 const modRewrite = require('connect-modrewrite');
 const open = require('gulp-open');
 const configRevReplace = require('gulp-requirejs-rev-replace');
+const tmodjs = require('gulp-tmod');
+const replace = require('gulp-replace');
 
 console.log('env:', process.env.xx);
 
@@ -157,8 +159,8 @@ function revjs() {
 //#region dev开发测试服务器 和pro生产服务器切换   使用gulp-connect配置服务器
 //配置测试服务器
 function devServer(cb) {
-    let root = process.env.mode === "dist"?'./dist':'./src';
-    let port = process.env.mode === 'dist'? 38901:38900;
+    let root = process.env.mode === "dist" ? './dist' : './src';
+    let port = process.env.mode === 'dist' ? 38901 : 38900;
     connect.server({
         root: [root], // 网站根目录
         port: port, // 端口
@@ -174,10 +176,10 @@ function devServer(cb) {
 }
 // 启动浏览器打开地址
 function openBrowser() {
-    let strPort = process.env.mode === 'dist'? '38901':'38900';
+    let strPort = process.env.mode === 'dist' ? '38901' : '38900';
     return gulp
         .src(__filename)
-        .pipe(open({ uri: 'http://localhost:'+ strPort +'/index.html' }));
+        .pipe(open({ uri: 'http://localhost:' + strPort + '/index.html' }));
 }
 //#endregion
 
@@ -205,10 +207,20 @@ function openBrowserDist() {
 }
 //#endregion
 
-//开发相关的任务
-//1.监听sass的变化 自动编译sass
-//2.自动执行打开浏览器 启动server
-//3.监听js的变化
+function tpl() {
+    // 拿到所有的路径
+    return gulp
+        .src('src/template/**/*.html')
+        .pipe(tmodjs({
+            templateBase: 'src/template/',
+            runtime: 'tpl.js',
+            compress: false
+        }))
+        // 自动生成的模板文件，进行babel转换，会报错，此转换插件已经停更，所以间接改这个bug
+        // 参考bug：https://github.com/aui/tmodjs/issues/112 主要是this  →  window
+        .pipe(replace('var String = this.String;', 'var String = window.String;'))
+        .pipe(gulp.dest('src/js/tmpl/'));
+}
 
 //#region dev 开发相关的任务
 //1.监听sass的变化 自动编译sass
@@ -222,6 +234,6 @@ gulp.task('dev', gulp.series(devServer, openBrowser, function () {
 //default 输入gulp的时候执行的默认任务
 //第一个参数 任务的名字 第二个参数具体要执行的任务
 //gulp.parallel是提供的API 允许并行执行任务
-gulp.task('default', gulp.series(cleanDist, gulp.parallel(js, stylePro, imgMin),revjs, copy, html, devServer, openBrowser));
+gulp.task('default', gulp.series(cleanDist, gulp.parallel(js, stylePro, imgMin), revjs, copy, html, devServer, openBrowser));
 
 
