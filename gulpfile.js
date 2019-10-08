@@ -19,12 +19,12 @@ const configRevReplace = require('gulp-requirejs-rev-replace');
 
 console.log('env:', process.env.xx);
 
-//#region 处理html文件和js文件的版本替换  
+//#region 处理html文件中索引文件的版本替换
 function html() {   //接收一个回调函数作为参数 此回调函数执行后 告诉gulp当前任务执行完成   
     //把src目录下的html都复制到dist目录下 并且替换css版本 js版本也得替换   
     //最后 html 进行压缩   
     return gulp.src(['./src/index.html', './src/view/**/*.html', './src/style/rev-manifest.json', './src/js/rev-manifest.json'], { base: './src/' })
-        .pipe(revCollector({ replaceReved: true }))   //执行html文件内的css文件名的替换和js文件名的替换  
+        .pipe(revCollector({ replaceReved: true }))   //执行html文件内索引的css文件名的替换和js文件名的替换  
         .pipe(htmlmin({
             removeComments: true, // 清除HTML注释   
             collapseWhitespace: true, // 压缩HTML   
@@ -82,9 +82,9 @@ function stylePro() {
 }
 //#endregion
 
-//#region 清理指定目录下的所有.css文件和.html文件
+//#region 清理指定目录下的所有.css文件.html文件和.js文件
 function cleanDist() {
-    return gulp.src(['./dist/style/*.css', './dist/index.html', './dist/view/**/*.html', './dist/js/**/*.js'], { read: false })
+    return gulp.src(['./dist/style/*.css', './dist/index.html', './dist/view/**/*.html', './dist/js/**/*.js'], { read: false, allowEmpty: ture })
         .pipe(clean());
 }
 //#endregion 
@@ -219,6 +219,6 @@ gulp.task("dev", function () {
 
 //default 输入gulp的时候执行的默认任务
 //第一个参数 任务的名字 第二个参数具体要执行的任务
-gulp.task('default', gulp.series(cleanDist, gulp.parallel(js, stylePro, imgMin), revjs, copy, html, distServer, openBrowserDist));
+gulp.task('default', gulp.series(cleanDist, js, html));
 
 
