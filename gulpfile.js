@@ -19,7 +19,7 @@ const configRevReplace = require('gulp-requirejs-rev-replace');
 
 console.log('env:', process.env.xx);
 
-//gulp4.0 注册一个任务的时候 直接可以把一个方法注册成一个任务名字   
+//#region 处理html文件和js文件的版本替换  
 function html() {   //接收一个回调函数作为参数 此回调函数执行后 告诉gulp当前任务执行完成   
     //把src目录下的html都复制到dist目录下 并且替换css版本 js版本也得替换   
     //最后 html 进行压缩   
@@ -37,6 +37,7 @@ function html() {   //接收一个回调函数作为参数 此回调函数执行
         })) //压缩html   
         .pipe(gulp.dest('./dist/'))  //目标目录和源目录对应  ./dist/ => ./src/
 }
+//#endregion
 
 //#region style for dev
 //文件的处理过程:
@@ -83,7 +84,7 @@ function stylePro() {
 
 //#region 清理指定目录下的所有.css文件和.html文件
 function cleanDist() {
-    return gulp.src(['./dist/style/*.css', './dist/index.html', './dist/view/**/*.html'], { read: false })
+    return gulp.src(['./dist/style/*.css', './dist/index.html', './dist/view/**/*.html', './dist/js/**/*.js'], { read: false })
         .pipe(clean());
 }
 //#endregion 
