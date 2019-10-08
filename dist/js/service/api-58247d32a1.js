@@ -1,0 +1,1 @@
+"use strict";requirejs.config({paths:{jquery:"../../lib/jQuery-3.4-1","controller/about":"controller/about-f0385f7b28","controller/indexController":"controller/indexController-5ae86c3d86","service/api":"service/api-58247d32a1","service/index":"service/index-9523c14161"}}),define(["jquery"],function(i){return{getUserList:function(e,r){i.ajax}}});

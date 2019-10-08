@@ -142,7 +142,7 @@ function js() {
 }
 //#endregion
 
-// 给requirejs引用的文件修改版本号的路径
+//#region 给requirejs引用的文件修改版本号的路径
 function revjs() {
     return gulp
         .src('./dist/**/*.js')
@@ -152,17 +152,19 @@ function revjs() {
         .pipe(uglify())
         .pipe(gulp.dest('dist/'));
 }
+//#endregion
 
-//使用gulp-connect配置服务器
-//#region 开发测试服务器
-// 配置测试服务器
+//#region dev开发测试服务器 和pro生产服务器切换   使用gulp-connect配置服务器
+//配置测试服务器
 function devServer(cb) {
+    let root = process.env.mode === "dist"?'./dist':'./src';
+    let port = process.env.mode === 'dist'? 38901:38900;
     connect.server({
-        root: ['./src'], // 网站根目录
-        port: 38900, // 端口
+        root: [root], // 网站根目录
+        port: port, // 端口
         livereload: true,
         middleware: function (connect, opt) {
-            return [modRewrite([// 设置代理
+            return [modRewrite([// 设置代理 下面文字开头是正则表达式 用来转地址
                 // http://localhost:38900/api/userlist  该地址被转为下面的地址
                 // http://localhost:4000/userlist
                 '^/api/(.*)$ http://localhost:4000/$1 [P]'])];
@@ -170,17 +172,17 @@ function devServer(cb) {
     });
     cb();
 }
-
 // 启动浏览器打开地址
 function openBrowser() {
+    let strPort = process.env.mode === 'dist'? '38901':'38900';
     return gulp
         .src(__filename)
-        .pipe(open({ uri: 'http://localhost:38900/index.html' }));
+        .pipe(open({ uri: 'http://localhost:'+ strPort +'/index.html' }));
 }
-//#endregion 开发测试服务器
+//#endregion
 
-//#region 生产测试服务器
-function devServer(cb) {
+//#region pro生产测试服务器
+function distServer(cb) {
     connect.server({
         root: ['./dist'], // 网站根目录
         port: 38901, // 端口
@@ -196,7 +198,7 @@ function devServer(cb) {
 }
 
 // 启动浏览器打开地址
-function distBrowser() {
+function openBrowserDist() {
     return gulp
         .src(__filename)
         .pipe(open({ uri: 'http://localhost:38901/index.html' }));
@@ -212,13 +214,14 @@ function distBrowser() {
 //1.监听sass的变化 自动编译sass
 //2.自动执行打开浏览器 启动server
 //只要.scss或.css产生变化以后 就会自动执行这个保存工作
-gulp.task("dev", function () {
+gulp.task('dev', gulp.series(devServer, openBrowser, function () {
     gulp.watch(['./src/style/scss/**/*.scss', './src/style/css/**/*.css'], gulp.series(styleDev))
-});
+}));
 //#endregion
 
 //default 输入gulp的时候执行的默认任务
 //第一个参数 任务的名字 第二个参数具体要执行的任务
 //gulp.parallel是提供的API 允许并行执行任务
-gulp.task('default', gulp.series(cleanDist, gulp.parallel(js, stylePro, imgMin), copy, html));
+gulp.task('default', gulp.series(cleanDist, gulp.parallel(js, stylePro, imgMin),revjs, copy, html, devServer, openBrowser));
+
 

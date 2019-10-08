@@ -1,14 +1,11 @@
 requirejs.config({
     paths: {
-        jquery: '../../lib/jQuery-3.4-1.js'
+        jquery: '../../lib/jQuery-3.4-1'
     }
 });
 
-//用requirejs定义了一个模块
-define([
-    'jquery',
-], function($){
-    'use strict';
+//用requirejs定义了一个模块 这里依赖了jQuery
+define(['jquery'], function($){
     return {
         getUserList:function(params, callback){
             $.ajax;({
@@ -20,3 +17,6 @@ define([
         }
     };
 });
+
+
+

@@ -1,7 +1,7 @@
 requirejs.config({
     paths: {
-        jquery: '../../lib/jQuery-3.4-1.js',
-        api:'../service/api.js'
+        jquery: '../../lib/jQuery-3.4-1',
+        api:'../service/api'
     }
 });
 
@@ -11,10 +11,12 @@ requirejs(['jquery', 'api'], function($, api) {
             alert(2333);
         });
     }); 
+
+    // 控制器层调用服务器层获取数据
+    api.getUserList(null, function(data){
+        console.log(data);   //配合模版引擎(art-template) + data => html标签
+    });
 });
-//控制器层调用服务器层获取数据
-api.getUserList(null, function(data){
-    console.log(data);   //配合模版引擎(art-template) + data => html标签
-});
+
 
 
