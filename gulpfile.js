@@ -84,7 +84,7 @@ function stylePro() {
 
 //#region 清理指定目录下的所有.css文件.html文件和.js文件
 function cleanDist() {
-    return gulp.src(['./dist/style/*.css', './dist/index.html', './dist/view/**/*.html', './dist/js/**/*.js'], { read: false, allowEmpty: ture })
+    return gulp.src(['dist/**/*.*'], { read: false, allowEmpty: true })
         .pipe(clean());
 }
 //#endregion 
@@ -219,6 +219,6 @@ gulp.task("dev", function () {
 
 //default 输入gulp的时候执行的默认任务
 //第一个参数 任务的名字 第二个参数具体要执行的任务
-gulp.task('default', gulp.series(cleanDist, js, html));
-
+//gulp.parallel是提供的API 允许并行执行任务
+gulp.task('default', gulp.series(cleanDist, gulp.parallel(js, stylePro, imgMin), copy, html));
 

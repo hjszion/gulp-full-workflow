@@ -15,6 +15,7 @@
     "@babel/preset-env": "^7.6.0",
     "autoprefixer": "^9.6.1",
     "connect-modrewrite": "^0.10.2",
+    "core-js": "^2.6.9",
     "cross-env": "^6.0.0",
     "eslint": "^6.4.0",
     "gulp": "^4.0.2",
@@ -37,7 +38,5 @@
     "htmlmin": "0.0.7",
     "node-sass": "^4.12.0"
   },
-  "dependencies": {
-    "core-js": "^2.6.9"
-  }
+  "dependencies": {}
 }
