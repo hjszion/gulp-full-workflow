@@ -207,6 +207,7 @@ function openBrowserDist() {
 }
 //#endregion
 
+//#region tpl任务 用于处理html模版
 function tpl() {
     // 拿到所有的路径
     return gulp
@@ -221,19 +222,22 @@ function tpl() {
         .pipe(replace('var String = this.String;', 'var String = window.String;'))
         .pipe(gulp.dest('src/js/tmpl/'));
 }
+gulp.task('tpl', tpl);
+//#endregion
 
 //#region dev 开发相关的任务
 //1.监听sass的变化 自动编译sass
 //2.自动执行打开浏览器 启动server
 //只要.scss或.css产生变化以后 就会自动执行这个保存工作
-gulp.task('dev', gulp.series(devServer, openBrowser, function () {
-    gulp.watch(['./src/style/scss/**/*.scss', './src/style/css/**/*.css'], gulp.series(styleDev))
+gulp.task('dev', gulp.series(devServer, tpl, openBrowser, function () {
+    gulp.watch(['./src/style/scss/**/*.scss', './src/style/css/**/*.css'], gulp.series(styleDev));
+    gulp.watch(['./src/template/**/*.html'], gulp.series(tpl));
 }));
 //#endregion
 
 //default 输入gulp的时候执行的默认任务
 //第一个参数 任务的名字 第二个参数具体要执行的任务
 //gulp.parallel是提供的API 允许并行执行任务
-gulp.task('default', gulp.series(cleanDist, gulp.parallel(js, stylePro, imgMin), revjs, copy, html, devServer, openBrowser));
+gulp.task('default', gulp.series(cleanDist, tpl, gulp.parallel(js, stylePro, imgMin), revjs, copy, html, devServer, openBrowser));
 
 
